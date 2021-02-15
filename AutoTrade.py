@@ -6,11 +6,14 @@ from slacker import Slacker
 import time
 
 # slack = Slacker('xxx')  # jipark
+slack = Slacker('xoxb-1695303660098-1695319635474-jBZsDZo6TP9HMDOD9oTbDw02')  # jipark - StudyApp
+#slack = Slacker('xoxb-1695303660098-1708707534231-B2mJAWuPWs8DOERtt3ZpLdvs')  # jipark - StockAlarmApp
+
 def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
     print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
     strbuf = datetime.now().strftime('[%m/%d %H:%M:%S] ') + message
-    slack.chat.post_message('#study', strbuf)
+    slack.chat.post_message('#stockalarm', strbuf)
 
 def printlog(message, *args):
     """인자로 받은 문자열을 파이썬 셸에 출력한다."""
