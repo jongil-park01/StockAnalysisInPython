@@ -4,10 +4,13 @@ import pandas as pd
 from datetime import datetime
 from slacker import Slacker
 import time
+import json
 
-# slack = Slacker('xxx')  # jipark
-# slack = Slacker('xxx')  # jipark - StudyApp
-# slack = Slacker('xxx')  # jipark - StockAlarmApp
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+SLACKER_TOKEN = config['Slacker']['StockAlarmApp'] # 'secret-key-of-myapp'
+slack = Slacker(SLACKER_TOKEN)  # jipark - StockAlarmApp
 
 def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
