@@ -185,7 +185,7 @@ def get_movingaverage(code, window):
 def buy_etf(code):
     """인자로 받은 종목을 최유리 지정가 FOK 조건으로 매수한다."""
     try:
-        # global bought_list      # 함수 내에서 값 변경을 하기 위해 global로 지정
+        global bought_list      # 함수 내에서 값 변경을 하기 위해 global로 지정
         if code in bought_list:  # 매수 완료 종목이면 더 이상 안 사도록 함수 종료
             #printlog('code:', code, 'in', bought_list)
             return False
