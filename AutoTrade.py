@@ -187,7 +187,7 @@ def buy_etf(code):
     try:
         global bought_list      # 함수 내에서 값 변경을 하기 위해 global로 지정
         if code in bought_list:  # 매수 완료 종목이면 더 이상 안 사도록 함수 종료
-            #printlog('code:', code, 'in', bought_list)
+            printlog('code:', code, 'in', bought_list)
             return False
         time_now = datetime.now()
         current_price, ask_price, bid_price = get_current_price(code)
@@ -199,6 +199,7 @@ def buy_etf(code):
             buy_qty = buy_amount // ask_price
         stock_name, stock_qty = get_stock_balance(code)  # 종목명과 보유수량 조회
         # printlog('bought_list:', bought_list, 'len(bought_list):', len(bought_list), 'target_buy_count:', target_buy_count)
+
         if current_price > target_price and current_price > ma5_price and current_price > ma10_price:
             printlog(stock_name + '(' + str(code) + ') ' + str(buy_qty) + 'EA : ' + str(current_price) + ' meets the buy condition!`')
             cpTradeUtil.TradeInit()
