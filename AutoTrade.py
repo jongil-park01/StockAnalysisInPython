@@ -19,7 +19,7 @@ def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
     print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
     strbuf = datetime.now().strftime('[%m/%d %H:%M:%S] ') + message
-    slack.chat.post_message('#stockalarm', strbuf)
+    # slack.chat.post_message('#stockalarm', strbuf)
 
 
 def printlog(message, *args):
@@ -112,17 +112,17 @@ def get_stock_balance(code):
         stock_name = cpBalance.GetDataValue(0, i)   # 종목명
         stock_qty = cpBalance.GetDataValue(15, i)   # 수량
         if code == 'ALL':
-            dbgout(str(i+1) + ' ' + stock_code + '(' + stock_name + ')' + ': ' + str(stock_qty) + '주')
-            dbgout('################')
+            dbgout(str(i+1) + ' ' + stock_code + '(' + stock_name + ')' + ': ' + str(stock_qty) + '주')  
             stocks.append({'code': stock_code, 'name': stock_name, 'qty': stock_qty})
         if stock_code == code:
-            dbgout(stock_code + '(' + stock_name + ')' + ': ' + str(stock_qty) + '주')
+            #dbgout("CHECK : " + stock_code + ' - ' + stock_name)
             return stock_name, stock_qty
 
     if code == 'ALL':
         return stocks
     else:
         stock_name = cpCodeMgr.CodeToName(code)
+        #dbgout("CHECK : " + code + ' - ' + stock_name)
         return stock_name, 0
 
 
@@ -155,7 +155,7 @@ def get_target_price(code):
         ######################################################################
         # 0.2 : 전일자 변동폭을 기준으로 매수 금액을 결정하는 비율  - 조정 필요
         ######################################################################
-        target_price = today_open + (lastday_high - lastday_low) * 0.5
+        target_price = today_open + (lastday_high - lastday_low) * 0.4
 
         return target_price
 
@@ -229,6 +229,8 @@ def buy_etf(code):
             if bought_qty > 0:
                 bought_list.append(code)
                 dbgout("`buy_etf(" + str(stock_name) + ' : ' + str(code) + ") -> " + str(bought_qty) + "EA bought!" + "`")
+        else:
+            printlog(str(code) + ' (' + stock_name + ') doesnt meet condition!!!')
     except Exception as ex:
         dbgout("`buy_etf(" + str(code) + ") -> exception! " + str(ex) + "`")
 
@@ -274,8 +276,15 @@ if __name__ == '__main__':
         # 대상 종목 수정 필요
         ##########################################################################
         dbgout("================")
-        dbgout("대상 종목 : 대한항공,삼성전자,네이버,카카오,HMM")
-        symbol_list = {"A003490", "A005930", "A035420", "A035720", "A011200"}
+        dbgout("대상 종목 : TIGER 소프트웨어, TIGER 미국나스닥100, KODEX 선진국MSCI World, TIGER 200 IT, 미국FANG플러스(H), KODEX 2차전지산업")
+        symbol_list = { "A000270"  # 기아자동차
+                        ,"A157490" # TIGER 소프트웨어       -- 한국 IT 기업들 - 카카오, 네이버, NC 등...
+                        ,"A133690" # TIGER 미국나스닥100    -- 미국나스닥 지수 100 에 투자...
+                        ,"A139260" # TIGER 200 IT          -- 한국 IT 기업 - 삼성,LG,SK 하이닉스...
+                        ,"A251350" # KODEX 선진국MSCI World -- 선진국 23개국....
+                        ,"A305720" # KODEX 2차전지산업      --  
+                        ,"A314250" # 미국FANG플러스(H)      -- 미국 IT 기업들 - 트위터, 애플, 바이두, 애플, 페이스북, 테슬라, 아마존, 알리바바...
+                        }
 
         ##########################################################################
         # 대상 종목의 매수 비율 수정 필요
@@ -329,6 +338,7 @@ if __name__ == '__main__':
             if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
                 dbgout('`self-destructed!`')
                 sys.exit(0)
-            time.sleep(3)
+            print('Start Sleep for 10 Second.........')
+            time.sleep(10)
     except Exception as ex:
         dbgout('`main -> exception! ' + str(ex) + '`')
