@@ -1,0 +1,9 @@
+{
+    "Slacker": {
+        "StockAlarmApp": "slack bot auth code"
+    },
+    "CREON": {
+        "pwd": "creon pwd",
+        "pwdcert": "dert pwd"
+    }
+}

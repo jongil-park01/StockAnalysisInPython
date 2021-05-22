@@ -4,12 +4,12 @@ import pandas as pd
 from datetime import datetime
 from slacker import Slacker
 import time, calendar
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options 
+# from bs4 import BeautifulSoup
+# from urllib.request import urlopen
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options 
 
-slack = Slacker('xoxb-341411373331-390645946323-wPFYKNbhlgef4bMUiP1CvSyX')
+slack = Slacker('xoxb-1695303660098-1708707534231-kuStQTghGYBdAc1olwWKyxBM')
 def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
     print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
